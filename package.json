@@ -1,0 +1,16 @@
+{
+  "name": "disneymovies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json2xls": "^0.1.2",
+    "puppeteer": "^2.1.1"
+  }
+}
