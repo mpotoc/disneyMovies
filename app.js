@@ -24,6 +24,8 @@ const worksheet_name = program.worksheet;
     /*args: [
       '--proxy-server=socks5://198.211.99.227:46437'
     ],*/
+    //headless: false,
+    //slowMo: 200,
     //devtools: true,
     defaultViewport: {
       width: 1920,
@@ -270,7 +272,11 @@ async function addDataToExcel(data, worksheet_name) {
   if (!worksheet_name) {
     worksheet = workbook.getWorksheet('FEB 2020');
   } else {
-    worksheet = workbook.addWorksheet(worksheet_name);
+    if (!workbook.getWorksheet(worksheet_name)) {
+      worksheet = workbook.addWorksheet(worksheet_name);
+    } else {
+      worksheet = workbook.getWorksheet(worksheet_name);
+    }
   }
 
   worksheet.columns = [
