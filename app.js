@@ -24,7 +24,7 @@ const worksheet_name = program.worksheet;
     /*args: [
       '--proxy-server=socks5://198.211.99.227:46437'
     ],*/
-    //headless: false,
+    headless: false,
     //slowMo: 200,
     //devtools: true,
     defaultViewport: {
@@ -88,7 +88,8 @@ const worksheet_name = program.worksheet;
   //  fullPage: true
   //});
 
-  let linksMovies = await page.$$('a.sc-ckVGcZ');
+  //let linksMovies = await page.$$('a.sc-ckVGcZ'); for featured movies
+  let linksMovies = await page.$$('a.sc-dxgOiQ');
   let dataMovies = [];
 
   let fromNumber = !start ? 0 : (parseInt(start) > (linksMovies.length - 1) ? 0 : parseInt(start));
@@ -98,10 +99,12 @@ const worksheet_name = program.worksheet;
   console.log('Movies scraping started.');
   for (let i = startNo; i < toNumber; i++) {
     await page.evaluate((i) => {
-      return ([...document.querySelectorAll('a.sc-ckVGcZ')][i]).click();
+      //return ([...document.querySelectorAll('a.sc-ckVGcZ')][i]).click(); for featured movies
+      return ([...document.querySelectorAll('a.sc-dxgOiQ')][i]).click();
     }, i);
 
-    await page.waitForSelector('a.sc-ckVGcZ');
+    //await page.waitForSelector('a.sc-ckVGcZ'); for featured movies
+    await page.waitForSelector('div.sc-iSDuPN');
 
     let urlMovie = await page.url();
 
@@ -121,8 +124,11 @@ const worksheet_name = program.worksheet;
         ((viewable_time_step2[0] * 60 * 60) + (viewable_time_step2[2] * 60));
 
       let rating_step1 = document.querySelector('p > img');
-      let rating_step2 = rating_step1.alt.split('_');
-      let rating = rating_step2[2].toUpperCase();
+      let rating = 'N/A';
+      if (rating_step1) {
+        let rating_step2 = rating_step1.alt.split('_');
+        rating = rating_step2[2].toUpperCase();
+      }
 
       let title_step = document.querySelector('div[class~="sc-iujRgT"] > img');
       let title = title_step.alt;
@@ -198,7 +204,7 @@ async function autoScroll(page) {
           clearInterval(timer);
           resolve();
         }
-      }, 100);
+      }, 500);
     });
   });
 };
