@@ -124,7 +124,7 @@ const worksheet_name = program.worksheet;
         ((viewable_time_step2[0] * 60 * 60) + (viewable_time_step2[2] * 60));
 
       let rating_step1 = document.querySelector('p > img');
-      let rating = 'N/A';
+      let rating = '';
       if (rating_step1) {
         let rating_step2 = rating_step1.alt.split('_');
         rating = rating_step2[2].toUpperCase();
